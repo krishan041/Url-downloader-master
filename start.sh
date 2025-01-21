@@ -1,4 +1,4 @@
-#!/bin/bash
+pip3 install -r requirements.txt
 
 # Make the script executable
 chmod +x start.sh
