@@ -1,4 +1,4 @@
-#!/bin/sh -c pip3 install -U -r requirements.txt
+#/bin/sh -c pip3 install -U -r requirements.txt
 # Make the script executable
 chmod +x start.sh
 
