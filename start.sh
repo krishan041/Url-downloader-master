@@ -1,6 +1,15 @@
-echo "Cloning Repo...."
-git clone https://github.com/LazyDeveloperr/MissPerfect-URL-BOT /MissPerfectURLBOT
-cd /MissPerfectURLBOT
-pip3 install -r requirements.txt
-echo "Starting Bot...."
-python3 bot.py
+#!/bin/bash
+
+# Make the script executable
+chmod +x start.sh
+
+# Activate virtual environment if needed
+# source venv/bin/activate
+
+# Export environment variables if needed
+# export BOT_TOKEN=""
+# export API_ID="27536109"
+# export API_HASH="b84d7d4dfa33904d36b85e1ead16bd63"
+
+# Start the bot
+python3 main.py
