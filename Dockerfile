@@ -1,21 +1,29 @@
-# Python Based Docker
-FROM python:latest
+FROM python:3.9-slim
 
-# Installing Packages
-RUN apt update && apt upgrade -y
-RUN apt install git curl python3-pip ffmpeg -y
+# Install system-level dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libjpeg-dev \
+    zlib1g-dev \
+    libssl-dev \
+    libffi-dev \
+    git \
+    && apt-get clean
 
-# Updating Pip Packages
-RUN pip3 install -U pip
+# Set the working directory
+WORKDIR /app
 
-# Copying Requirements
-COPY requirements.txt /requirements.txt
+# Copy project files
+COPY . .
 
-# Installing Requirements
-RUN cd /
-RUN pip3 install -U -r requirements.txt
-RUN mkdir /MissPerfectURL
-WORKDIR /MissPerfectURL
+# Upgrade pip
+RUN pip3 install --upgrade pip
 
-# Running MessageSearchBot
-CMD ["python", "bot.py"]
+# Install dependencies
+RUN pip3 install --upgrade --requirement requirements.txt
+
+# Expose the port
+EXPOSE 5000
+
+# Run the application
+CMD ["gunicorn", "app:app"]
