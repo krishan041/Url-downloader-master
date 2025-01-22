@@ -1,33 +1,31 @@
+# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
-# Install system-level dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libjpeg-dev \
-    zlib1g-dev \
-    libssl-dev \
-    libffi-dev \
-    git \
-    && apt-get clean
+# Set environment variables to ensure Python output is not buffered
+ENV PYTHONUNBUFFERED 1
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy project files
-COPY . .
+# Install system dependencies required for building and compiling Python packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*  # Clean up apt cache to reduce image size
 
-# Upgrade pip
-RUN pip install --upgrade pip
+# Copy the current directory contents into the container at /app
+COPY . /app/
 
-# Install dependencies
-RUN pip install --upgrade --requirement requirements.txt
+# Upgrade pip to the latest version
+RUN pip install --no-cache-dir --upgrade pip
 
-# Expose the port
+# Install the Python dependencies from the requirements.txt file
+RUN pip install --no-cache-dir --requirement requirements.txt
+
+# Expose the port the app runs on (for web applications)
 EXPOSE 5000
 
-# Run the application
-CMD ["gunicorn", "app:app"]
-
-docker build -t url-downloader.
-
-docker run -p 5000:5000 url-downloader
+# Define the default command to run your application
+# Replace 'app.py' with your main script if it's different (e.g., 'manage.py' for Django apps)
+CMD ["python", "app.py"]
