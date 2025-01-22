@@ -17,13 +17,17 @@ WORKDIR /app
 COPY . .
 
 # Upgrade pip
-RUN pip3 install --upgrade pip
+RUN pip install --upgrade pip
 
 # Install dependencies
-RUN pip3 install --upgrade --requirement requirements.txt
+RUN pip install --upgrade --requirement requirements.txt
 
 # Expose the port
 EXPOSE 5000
 
 # Run the application
 CMD ["gunicorn", "app:app"]
+
+docker build -t url-downloader
+
+docker run -p 5000:5000 url-downloader
