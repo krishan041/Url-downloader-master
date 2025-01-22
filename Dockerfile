@@ -28,6 +28,6 @@ EXPOSE 5000
 # Run the application
 CMD ["gunicorn", "app:app"]
 
-docker build -t url-downloader
+docker build -t url-downloader.
 
 docker run -p 5000:5000 url-downloader
