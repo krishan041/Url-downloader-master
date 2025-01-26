@@ -18,5 +18,5 @@ RUN pip3 install cloudscraper
 
 ENV COOKIES_FILE_PATH="/app/youtube_cookies.txt"
 
-#CMD ["python3", "modules/main.py"]
-CMD gunicorn app:app & python3 config.py
+#CMD ["python3", "config.py"]
+CMD python3 config.py
